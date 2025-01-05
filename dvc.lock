@@ -1,0 +1,28 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: "python src/preprocess.py  --input_path ./data/raw/train.csv  --store_path
+      ./data/raw/store.csv  --output_path ./data/processed/processed_data.csv  --missing_threshold
+      0.6\n"
+    deps:
+    - path: ./data/raw/store.csv
+      hash: md5
+      md5: 30c9ccb5af66c21f65e7d1da967e6251
+      size: 45010
+    - path: ./data/raw/train.csv
+      hash: md5
+      md5: d47aedd9e2d580e06a6ef7ce1732e8b6
+      size: 38057952
+    - path: src/preprocess.py
+      hash: md5
+      md5: 39449c876a0b74626b8d29871e1be5a6
+      size: 12507
+    outs:
+    - path: ./data/processed/data_splits.npz
+      hash: md5
+      md5: a608df74d477598e01f40d0050451f0b
+      size: 195306034
+    - path: ./data/processed/processed_data.csv
+      hash: md5
+      md5: 231e9535223c3871991ecf16f9ff728e
+      size: 95762157

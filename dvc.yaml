@@ -1,0 +1,17 @@
+stages:
+  preprocess:
+    cmd: >
+      python src/preprocess.py 
+      --input_path ./data/raw/train.csv 
+      --store_path ./data/raw/store.csv 
+      --output_path ./data/processed/processed_data.csv 
+      --missing_threshold 0.6
+    deps:
+      - src/preprocess.py
+      - ./data/raw/train.csv
+      - ./data/raw/store.csv
+    outs:
+      - ./data/processed/processed_data.csv
+      - ./data/processed/data_splits.npz
+
+
