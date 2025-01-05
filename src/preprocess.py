@@ -183,54 +183,6 @@ class PreprocessData:
             plt.tight_layout()
             plt.show()
 
-    # def prepare_data(self):
-    #     """Prepare data for model training by splitting and preprocessing."""
-    #     logger.info("Preparing data for training...")
-
-    #     # Separate features and target
-    #     X = self.df.drop(columns=["Sales"])
-    #     y_sales = self.df["Sales"]
-
-    #     # Filter columns based on availability
-    #     self.numerical_columns = [
-    #         col for col in self.numerical_columns if col in X.columns
-    #     ]
-
-    #     print(f"{self.numerical_columns=}")
-    #     self.categorical_columns = [
-    #         col for col in self.categorical_columns if col in X.columns
-    #     ]
-    #     print(f"{self.categorical_columns=}")
-
-    #     # Preprocess features using ColumnTransformer
-    #     self.data_preprocessor = ColumnTransformer(
-    #         transformers=[
-    #             ("num", StandardScaler(), self.numerical_columns),
-    #             (
-    #                 "cat",
-    #                 OneHotEncoder(handle_unknown="ignore"),
-    #                 self.categorical_columns,
-    #             ),
-    #         ]
-    #     )
-
-    #     logger.info("Applying preprocessing transformations...")
-    #     X_transformed = self.data_preprocessor.fit_transform(X)
-
-    #     # Split data for training and validation
-    #     self.X_train, self.X_val, self.y_train, self.y_val = train_test_split(
-    #         X_transformed, y_sales, test_size=0.25, shuffle=False
-    #     )
-
-    #     np.savez(
-    #         "../data/processed/data_splits.npz",
-    #         X_train=self.X_train,
-    #         X_val=self.X_val,
-    #         y_train=self.y_train,
-    #         y_val=self.y_val,
-    #     )
-    #     logger.info("Data splits saved to npz file.")
-
     def prepare_data(self):
         """Prepare data for model training by splitting and preprocessing."""
         logger.info("Preparing data for training...")
