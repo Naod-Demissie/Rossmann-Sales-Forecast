@@ -7,3 +7,6 @@ dvc
 
 statsmodels
 tensorflow
+
+fastapi
+uvicorn
