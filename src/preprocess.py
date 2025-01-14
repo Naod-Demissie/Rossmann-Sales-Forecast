@@ -10,6 +10,8 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.model_selection import train_test_split
 from scipy.stats import zscore
 
+import pickle
+
 # Set up logging
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -220,19 +222,35 @@ class PreprocessData:
         logger.info("Applying preprocessing transformations...")
         X_transformed = self.data_preprocessor.fit_transform(X)
 
+        # Scale target variable
+        logger.info("Scaling target variable...")
+        self.y_scaler = StandardScaler()
+        y_sales_scaled = self.y_scaler.fit_transform(y_sales.values.reshape(-1, 1))
+
         # Split data for training and validation
         self.X_train, self.X_val, self.y_train, self.y_val = train_test_split(
-            X_transformed, y_sales, test_size=0.25, shuffle=False
+            X_transformed, y_sales_scaled, test_size=0.25, shuffle=False
         )
 
-        np.savez(
-            "./data/processed/data_splits.npz",
-            X_train=self.X_train,
-            X_val=self.X_val,
-            y_train=self.y_train,
-            y_val=self.y_val,
+        print(
+            self.X_train.shape, self.X_val.shape, self.y_train.shape, self.y_val.shape
         )
-        logger.info("Data splits saved to npz file.")
+
+        # Ensure the output directory exists
+        os.makedirs("./data/processed", exist_ok=True)
+
+        # Save each array in pickle format
+        logger.info("Saving processed data splits in pickle format...")
+        with open("./data/processed/X_train.pkl", "wb") as f:
+            pickle.dump(self.X_train, f)
+        with open("./data/processed/X_val.pkl", "wb") as f:
+            pickle.dump(self.X_val, f)
+        with open("./data/processed/y_train.pkl", "wb") as f:
+            pickle.dump(self.y_train, f)
+        with open("./data/processed/y_val.pkl", "wb") as f:
+            pickle.dump(self.y_val, f)
+
+        logger.info("Data splits and scaler saved as pickle files.")
 
     def save_data(self):
         """Save the processed data to the specified output path."""
