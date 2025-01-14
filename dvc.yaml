@@ -4,7 +4,7 @@ stages:
       python src/preprocess.py 
       --input_path ./data/raw/train.csv 
       --store_path ./data/raw/store.csv 
-      --output_path ./data/processed/processed_data.csv 
+      --output_path ./data/processed/processed_data.csv
       --missing_threshold 0.6
     deps:
       - src/preprocess.py
@@ -12,6 +12,27 @@ stages:
       - ./data/raw/store.csv
     outs:
       - ./data/processed/processed_data.csv
-      - ./data/processed/data_splits.npz
+      - ./data/processed/X_train.pkl
+      - ./data/processed/X_val.pkl
+      - ./data/processed/y_train.pkl
+      - ./data/processed/y_val.pkl
+
+  train:
+    cmd: >
+      python src/train.py 
+      --preprocessed_data ./data/processed/processed_data.csv
+      --X_train ./data/processed/X_train.pkl
+      --X_val ./data/processed/X_val.pkl
+      --y_train ./data/processed/y_train.pkl
+      --y_val ./data/processed/y_val.pkl
+      --epochs 20
+      --batch_size 20000
+    deps:
+      - src/train.py
+      - ./data/processed/processed_data.csv
+      - ./data/processed/X_train.pkl
+      - ./data/processed/X_val.pkl
+      - ./data/processed/y_train.pkl
+      - ./data/processed/y_val.pkl
 
 

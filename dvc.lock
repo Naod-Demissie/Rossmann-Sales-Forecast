@@ -2,7 +2,7 @@ schema: '2.0'
 stages:
   preprocess:
     cmd: "python src/preprocess.py  --input_path ./data/raw/train.csv  --store_path
-      ./data/raw/store.csv  --output_path ./data/processed/processed_data.csv  --missing_threshold
+      ./data/raw/store.csv  --output_path ./data/processed/processed_data.csv --missing_threshold
       0.6\n"
     deps:
     - path: ./data/raw/store.csv
@@ -15,14 +15,56 @@ stages:
       size: 38057952
     - path: src/preprocess.py
       hash: md5
-      md5: 39449c876a0b74626b8d29871e1be5a6
-      size: 12507
+      md5: 61505598cd1671e0fb67d0680c302c94
+      size: 11529
     outs:
-    - path: ./data/processed/data_splits.npz
+    - path: ./data/processed/X_train.pkl
       hash: md5
-      md5: a608df74d477598e01f40d0050451f0b
-      size: 195306034
+      md5: 613984edfefdbabad681c8bc38587e46
+      size: 140375094
+    - path: ./data/processed/X_val.pkl
+      hash: md5
+      md5: 751e73609756899d05a94b94027ebffb
+      size: 46792142
     - path: ./data/processed/processed_data.csv
       hash: md5
       md5: 231e9535223c3871991ecf16f9ff728e
       size: 95762157
+    - path: ./data/processed/y_train.pkl
+      hash: md5
+      md5: b2cd8f7249cbf455f65f9ff3857d59e1
+      size: 6103412
+    - path: ./data/processed/y_val.pkl
+      hash: md5
+      md5: 50116723260882e9948f2d42c8461ccd
+      size: 2034588
+  train:
+    cmd: "python src/train.py  --preprocessed_data ./data/processed/processed_data.csv
+      --X_train ./data/processed/X_train.pkl --X_val ./data/processed/X_val.pkl --y_train
+      ./data/processed/y_train.pkl --y_val ./data/processed/y_val.pkl --epochs 20
+      --batch_size 20000\n"
+    deps:
+    - path: ./data/processed/X_train.pkl
+      hash: md5
+      md5: 613984edfefdbabad681c8bc38587e46
+      size: 140375094
+    - path: ./data/processed/X_val.pkl
+      hash: md5
+      md5: 751e73609756899d05a94b94027ebffb
+      size: 46792142
+    - path: ./data/processed/processed_data.csv
+      hash: md5
+      md5: 231e9535223c3871991ecf16f9ff728e
+      size: 95762157
+    - path: ./data/processed/y_train.pkl
+      hash: md5
+      md5: b2cd8f7249cbf455f65f9ff3857d59e1
+      size: 6103412
+    - path: ./data/processed/y_val.pkl
+      hash: md5
+      md5: 50116723260882e9948f2d42c8461ccd
+      size: 2034588
+    - path: src/train.py
+      hash: md5
+      md5: eb91224b236fa6c4acb72d680f4ac3cf
+      size: 8920
