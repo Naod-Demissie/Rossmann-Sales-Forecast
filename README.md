@@ -5,12 +5,17 @@ This is an end-to-end machine learning solution for forecasting Rossmann Pharmac
 ## Project Structure
 
 ```
-├── checkpoints                 
+├── checkpoints  
+│   ├── best_model
+|
 ├── configs                     
 ├── data
 │   ├── processed
-│   │   ├── data_splits.npz       
 │   │   ├── processed_data.csv    
+│   │   ├── X_train.pkl 
+│   │   ├── X_val.pkl    
+│   │   ├── y_train.pkl    
+│   │   ├── y_val.pkl    
 │   ├── raw
 │   │   ├── sample_submission.csv 
 │   │   ├── store.csv             
@@ -20,9 +25,13 @@ This is an end-to-end machine learning solution for forecasting Rossmann Pharmac
 │
 ├── dvc.lock                    
 ├── dvc.yaml                    
-├── logs                        
+├── logs 
+│   ├── train
+│   ├── validation
+|                
 ├── notebooks
 │   ├── 1.0-data-exploration.ipynb 
+│   ├── 2.0-modeling.ipynb 
 │   ├── README.md                 
 │   ├── __init__.py               
 │
@@ -42,6 +51,7 @@ This is an end-to-end machine learning solution for forecasting Rossmann Pharmac
 │   │   ├── trend_analysis.py      
 │   │   ├── __init__.py            
 │   ├── preprocess.py             
+│   ├── train.py             
 │   ├── __init__.py               
 │
 ├── tests
